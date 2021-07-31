@@ -55,7 +55,7 @@ class PersonInfo {
         this._note = note;
     }
 
-    get start_date() {``
+    get start_date() {
         return this._start_date;
     }
 
