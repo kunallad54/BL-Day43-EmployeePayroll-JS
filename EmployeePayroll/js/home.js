@@ -8,17 +8,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 const getEmployeePayrollDataFromStorage = () => {
     return localStorage.getItem('EmployeePayrollList') ?
-                JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
+        JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
 }
 
 const createInnerHtml = () => {
     if (empPayrollList.length == 0) return;
     const headerHtml = "<th></th><th>Name</th><th>Gender</th>" +
-                    "<th>Department</th><th>Salary</th><th>Start Date</th>" +
-                    "<th>Actions</th>";
+        "<th>Department</th><th>Salary</th><th>Start Date</th>" +
+        "<th>Actions</th>";
     let innerHtml = `${headerHtml}`;
     //let empPayrollList = createEmployeePayrollJSON();  
-    for ( const empPayrollData of empPayrollList ) {
+    for (const empPayrollData of empPayrollList) {
         innerHtml = `${innerHtml}
         <tr>
             <td>
@@ -45,7 +45,7 @@ const createInnerHtml = () => {
 
 const getDeptHtml = (deptList) => {
     let deptHtml = '';
-    for ( const dept of deptList ) {
+    for (const dept of deptList) {
         deptHtml = `${deptHtml} <div class="dept-label">${dept}</div>`
     }
     return deptHtml;
@@ -54,7 +54,7 @@ const getDeptHtml = (deptList) => {
 const createEmployeePayrollJSON = () => {
     let empPayrollListLocal = [
         {
-            _name: 'Swikruti Kore',
+            _name: 'Sayani Koley',
             _gender: 'Female',
             _department: [
                 'Engineering', 'HR'
@@ -65,7 +65,7 @@ const createEmployeePayrollJSON = () => {
             _profilePic: '../assets/profile-images/Ellipse 1.png'
         },
         {
-            _name: 'Krunal Lad',
+            _name: 'Suvadeep Das',
             _gender: 'Male',
             _department: [
                 'Engineering', 'Finance'
@@ -73,7 +73,7 @@ const createEmployeePayrollJSON = () => {
             _salary: '500000',
             _start_date: '29 Oct 2019',
             _note: '',
-            _profilePic: '../assets/profile-images/Ellipse -2.png'
+            _profilePic: '../assets/profile-images/Ellipse -3.png'
         }
     ]
     return empPayrollListLocal;
@@ -81,12 +81,19 @@ const createEmployeePayrollJSON = () => {
 
 const remove = (node) => {
     let empPayrollData = empPayrollList.find(empData => empData._id == node.id);
-    if( !empPayrollData ) return;
+    if (!empPayrollData) return;
     const index = empPayrollList
-                    .map( empData => empData._id )
-                    .indexOf(empPayrollData._id);
+        .map(empData => empData._id)
+        .indexOf(empPayrollData._id);
     empPayrollList.splice(index, 1);
     localStorage.setItem("EmployeePyrollList", JSON.stringify(empPayrollList));
     document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
+}
+
+const update = (node) => {
+    let empPayrollData = empPayrollList.find((empData) => empData._id == node.id);
+    if (!empPayrollData) return;
+    localStorage.setItem("editEmp", JSON.stringify(empPayrollData));
+    window.location.replace(site_properties.add_emp_payroll_page);
 }
