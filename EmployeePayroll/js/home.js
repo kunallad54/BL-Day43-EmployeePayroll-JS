@@ -1,14 +1,23 @@
+let empPayrollList;
 window.addEventListener('DOMContentLoaded', (event) => {
+    empPayrollList = getEmployeePayrollDataFromStorage();
+    document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
+    localStorage.removeItem('editEmp');
 });
 
+const getEmployeePayrollDataFromStorage = () => {
+    return localStorage.getItem('EmployeePayrollList') ?
+        JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
+}
 
 const createInnerHtml = () => {
+    if (empPayrollList.length == 0) return;
     const headerHtml = "<th></th><th>Name</th><th>Gender</th>" +
         "<th>Department</th><th>Salary</th><th>Start Date</th>" +
         "<th>Actions</th>";
     let innerHtml = `${headerHtml}`;
-    let empPayrollList = createEmployeePayrollJSON();
+    //let empPayrollList = createEmployeePayrollJSON();  
     for (const empPayrollData of empPayrollList) {
         innerHtml = `${innerHtml}
         <tr>
@@ -45,26 +54,26 @@ const getDeptHtml = (deptList) => {
 const createEmployeePayrollJSON = () => {
     let empPayrollListLocal = [
         {
-            _name: 'Krunal Lad',
+            _name: 'Sayani Koley',
+            _gender: 'Female',
+            _department: [
+                'Engineering', 'HR'
+            ],
+            _salary: '250000',
+            _start_date: '01 Nov 2020',
+            _note: '',
+            _profilePic: '../assets/profile-images/Ellipse 1.png'
+        },
+        {
+            _name: 'Suvadeep Das',
             _gender: 'Male',
             _department: [
                 'Engineering', 'Finance'
             ],
             _salary: '500000',
-            _start_date: '21 Oct 2021',
+            _start_date: '29 Oct 2019',
             _note: '',
-            _profilePic: '../assets/profile-images/Ellipse -2.png'
-        },
-        {
-            _name: 'Swikruti Kore',
-            _gender: 'Female',
-            _department: [
-                'Engineering', 'HR'
-            ],
-            _salary: '300000',
-            _start_date: '01 Nov 2020',
-            _note: '',
-            _profilePic: '../assets/profile-images/Ellipse 1.png'
+            _profilePic: '../assets/profile-images/Ellipse -3.png'
         }
     ]
     return empPayrollListLocal;
